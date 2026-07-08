@@ -1,0 +1,14 @@
+<svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="go-facter">
+  <defs><linearGradient id="facter" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14B8A6"/><stop offset="1" stop-color="#0F766E"/></linearGradient></defs>
+  <rect width="256" height="256" rx="56" fill="url(#facter)"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round">
+    <circle cx="104" cy="104" r="50"/>
+    <line x1="140" y1="140" x2="196" y2="196"/>
+  </g>
+  <g fill="#FFFFFF">
+    <circle cx="88" cy="88" r="8"/>
+    <circle cx="120" cy="88" r="8"/>
+    <circle cx="88" cy="120" r="8"/>
+    <circle cx="120" cy="120" r="8"/>
+  </g>
+</svg>
