@@ -1,0 +1,61 @@
+site_name: go-facter docs
+site_description: "A pure-Go reimplementation of Puppet's Facter system-inventory engine, exposing a stable API for Ruby's Facter interface. No cgo."
+site_url: https://go-facter.github.io/docs/
+repo_url: https://github.com/go-facter
+repo_name: go-facter
+edit_uri: ""
+
+theme:
+  name: material
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.instant
+    - content.code.copy
+    - search.suggest
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
+extra:
+  version:
+    provider: mike
+    default: latest
+
+nav:
+  - Home: index.md
+  - Why a Go engine: why.md
+  - Facts & schema: facts.md
+  - Usage & API: api.md
+  - Custom & external facts: external.md
+  - Roadmap: roadmap.md
+  - Contributing: contributing.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
