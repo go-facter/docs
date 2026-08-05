@@ -529,6 +529,11 @@
   <code>mountpoints</code>, <code>filesystems</code>, <code>disks</code>, <code>virtual</code> / <code>is_virtual</code>,
   <code>system_uptime</code>, <code>timezone</code>, <code>identity</code>, <code>path</code>, <code>facterversion</code>, plus the flat
   legacy aliases.</li>
+<li><strong>Facter 4 parity facts</strong> — <code>dmi</code> (bios / board / chassis / product, with the
+  <code>bios_*</code> / <code>productname</code> / <code>serialnumber</code> / <code>uuid</code> aliases), <code>ssh</code> host keys +
+  SSHFP fingerprints, <code>selinux</code>, <code>load_averages</code>, <code>cloud</code> / <code>ec2_metadata</code>,
+  <code>ruby</code>, <code>fips_enabled</code>, <code>aio_agent_version</code>, <code>augeasversion</code>,
+  <code>env_windows_installdir</code>.</li>
 <li><strong>External facts</strong> — <code>facts.d</code>: JSON / YAML / txt + executable facts.</li>
 <li><strong>CLI</strong> — <code>facter</code> full dump or single dotted-path query, JSON / YAML.</li>
 <li><strong>Quality</strong> — 100% coverage including error branches, <code>gofmt</code> + <code>go vet</code> clean,
@@ -541,8 +546,9 @@
   <code>Facter.add</code> / <code>Facter.to_hash</code> and the custom-fact DSL onto this engine, so
   Puppet manifests and Ruby code under <code>rbgo</code> resolve facts. Owned by a separate
   effort; this engine's stable API is its contract.</li>
-<li><strong>Deeper per-OS facts</strong> — Windows memory / uptime without cgo, richer <code>dmi</code>
-  and cloud-provider facts, structured <code>partitions</code>.</li>
+<li><strong>Deeper per-OS facts</strong> — Windows memory / uptime without cgo, richer
+  cloud-provider metadata beyond the base <code>cloud</code> / <code>ec2_metadata</code> facts, and
+  structured <code>partitions</code>.</li>
 <li><strong>External-fact caching (TTL)</strong> to mirror Facter's cached custom facts.</li>
 </ul>
 

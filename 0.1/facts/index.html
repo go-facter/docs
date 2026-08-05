@@ -418,6 +418,33 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#hardware-inventory-dmi" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardware inventory — dmi
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh-selinux-load_averages" class="md-nav__link">
+    <span class="md-ellipsis">
+      ssh, selinux, load_averages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cloud-ruby-agent-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloud, Ruby &amp; agent facts
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -610,6 +637,33 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#hardware-inventory-dmi" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardware inventory — dmi
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh-selinux-load_averages" class="md-nav__link">
+    <span class="md-ellipsis">
+      ssh, selinux, load_averages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cloud-ruby-agent-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloud, Ruby &amp; agent facts
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -685,6 +739,37 @@ human + capacity), <code>filesystems</code> (comma-separated on-disk fs types), 
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>identity.user / group / uid / gid / privileged
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>timezone, path, facterversion
 </code></pre></div>
+<h3 id="hardware-inventory-dmi">Hardware inventory — <code>dmi</code><a class="headerlink" href="#hardware-inventory-dmi" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>dmi.manufacturer                                    system vendor (SMBIOS)
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>dmi.bios.vendor / version / release_date
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>dmi.board.manufacturer / product / serial_number / asset_tag
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>dmi.chassis.type / asset_tag
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>dmi.product.name / serial_number / uuid
+</code></pre></div>
+<p>Sourced from <code>/sys/class/dmi/id</code> on Linux, <code>system_profiler</code> / <code>ioreg</code> on
+Darwin and <code>wmic</code> on Windows, and skipped where DMI is unavailable (many
+containers). The <code>bios_*</code>, <code>board*</code>, <code>chassis*</code>, <code>manufacturer</code>, <code>productname</code>,
+<code>serialnumber</code>, <code>uuid</code> legacy aliases derive from it.</p>
+<h3 id="ssh-selinux-load_averages"><code>ssh</code>, <code>selinux</code>, <code>load_averages</code><a class="headerlink" href="#ssh-selinux-load_averages" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ssh.&lt;algo&gt;.type / key                               algo: rsa / dsa / ecdsa / ed25519
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>ssh.&lt;algo&gt;.fingerprints.sha1 / .sha256              SSHFP records, computed in pure Go
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>selinux.enabled / enforced / current_mode           Linux; reports {enabled: false} when absent
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>selinux.policy_version / config_mode / config_policy
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>load_averages.1m / 5m / 15m                          run-queue averages as floats
+</code></pre></div>
+<p>The <code>ssh&lt;algo&gt;key</code> and <code>sshfp_&lt;algo&gt;</code> flat facts derive from the structured
+<code>ssh</code> fact, so each host key is read and fingerprinted at most once.</p>
+<h3 id="cloud-ruby-agent-facts">Cloud, Ruby &amp; agent facts<a class="headerlink" href="#cloud-ruby-agent-facts" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>cloud.provider                                       aws / gce / azure, from DMI (no network)
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>ec2_metadata.*                                       best-effort, non-blocking IMDS probe on EC2
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>ruby.version / sitedir / platform
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>fips_enabled                                         bool; /proc/sys/crypto/fips_enabled on Linux
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>aio_agent_version                                    puppet-agent AIO package version, when present
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>augeasversion                                        installed Augeas library version, when present
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>env_windows_installdir                               Windows install directory from the environment
+</code></pre></div>
+<p>The <code>cloud</code> / <code>ec2_metadata</code> probes are bounded and non-blocking: a host that is
+not on a provider never stalls fact resolution.</p>
 <h2 id="legacy-aliases">Legacy aliases<a class="headerlink" href="#legacy-aliases" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -737,6 +822,30 @@ human + capacity), <code>filesystems</code> (comma-separated on-disk fs types), 
 <tr>
 <td><code>id</code> / <code>gid</code></td>
 <td><code>identity.user</code> / <code>.gid</code></td>
+</tr>
+<tr>
+<td><code>bios_vendor</code> / <code>bios_version</code> / <code>bios_release_date</code></td>
+<td><code>dmi.bios.*</code></td>
+</tr>
+<tr>
+<td><code>boardmanufacturer</code> / <code>boardproductname</code> / <code>boardserialnumber</code> / <code>boardassettag</code></td>
+<td><code>dmi.board.*</code></td>
+</tr>
+<tr>
+<td><code>chassistype</code> / <code>chassisassettag</code></td>
+<td><code>dmi.chassis.*</code></td>
+</tr>
+<tr>
+<td><code>manufacturer</code> / <code>productname</code> / <code>serialnumber</code> / <code>uuid</code></td>
+<td><code>dmi.manufacturer</code> / <code>dmi.product.*</code></td>
+</tr>
+<tr>
+<td><code>ssh&lt;algo&gt;key</code> / <code>sshfp_&lt;algo&gt;</code></td>
+<td><code>ssh.&lt;algo&gt;.*</code></td>
+</tr>
+<tr>
+<td><code>memorysize_mb</code> / <code>memoryfree_mb</code> / <code>swapsize_mb</code> / <code>swapfree_mb</code></td>
+<td><code>memory.*</code> (mebibytes)</td>
 </tr>
 </tbody>
 </table>
