@@ -64,6 +64,49 @@ identity.user / group / uid / gid / privileged
 timezone, path, facterversion
 ```
 
+### Hardware inventory — `dmi`
+
+```text
+dmi.manufacturer                                    system vendor (SMBIOS)
+dmi.bios.vendor / version / release_date
+dmi.board.manufacturer / product / serial_number / asset_tag
+dmi.chassis.type / asset_tag
+dmi.product.name / serial_number / uuid
+```
+
+Sourced from `/sys/class/dmi/id` on Linux, `system_profiler` / `ioreg` on
+Darwin and `wmic` on Windows, and skipped where DMI is unavailable (many
+containers). The `bios_*`, `board*`, `chassis*`, `manufacturer`, `productname`,
+`serialnumber`, `uuid` legacy aliases derive from it.
+
+### `ssh`, `selinux`, `load_averages`
+
+```text
+ssh.<algo>.type / key                               algo: rsa / dsa / ecdsa / ed25519
+ssh.<algo>.fingerprints.sha1 / .sha256              SSHFP records, computed in pure Go
+selinux.enabled / enforced / current_mode           Linux; reports {enabled: false} when absent
+selinux.policy_version / config_mode / config_policy
+load_averages.1m / 5m / 15m                          run-queue averages as floats
+```
+
+The `ssh<algo>key` and `sshfp_<algo>` flat facts derive from the structured
+`ssh` fact, so each host key is read and fingerprinted at most once.
+
+### Cloud, Ruby & agent facts
+
+```text
+cloud.provider                                       aws / gce / azure, from DMI (no network)
+ec2_metadata.*                                       best-effort, non-blocking IMDS probe on EC2
+ruby.version / sitedir / platform
+fips_enabled                                         bool; /proc/sys/crypto/fips_enabled on Linux
+aio_agent_version                                    puppet-agent AIO package version, when present
+augeasversion                                        installed Augeas library version, when present
+env_windows_installdir                               Windows install directory from the environment
+```
+
+The `cloud` / `ec2_metadata` probes are bounded and non-blocking: a host that is
+not on a provider never stalls fact resolution.
+
 ## Legacy aliases
 
 | Alias | Resolves to |
@@ -79,6 +122,12 @@ timezone, path, facterversion
 | `memorysize` / `memoryfree` / `swapsize` / `swapfree` | `memory.*` |
 | `uptime` / `uptime_seconds` / `uptime_days` / `uptime_hours` | `system_uptime.*` |
 | `id` / `gid` | `identity.user` / `.gid` |
+| `bios_vendor` / `bios_version` / `bios_release_date` | `dmi.bios.*` |
+| `boardmanufacturer` / `boardproductname` / `boardserialnumber` / `boardassettag` | `dmi.board.*` |
+| `chassistype` / `chassisassettag` | `dmi.chassis.*` |
+| `manufacturer` / `productname` / `serialnumber` / `uuid` | `dmi.manufacturer` / `dmi.product.*` |
+| `ssh<algo>key` / `sshfp_<algo>` | `ssh.<algo>.*` |
+| `memorysize_mb` / `memoryfree_mb` / `swapsize_mb` / `swapfree_mb` | `memory.*` (mebibytes) |
 
 Aliases resolve lazily through the structured fact, so the underlying probe runs
 at most once regardless of which shape is queried.
