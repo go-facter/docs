@@ -1,6 +1,11 @@
-# Contributing
+---
+title: "Contributing"
+weight: 70
+---
 
-## Principles
+# Contributing {#contributing}
+
+## Principles {#principles}
 
 - **Pure Go, zero cgo.** Only the standard library. No shelling out that a file
   read can replace; every OS probe goes through an injectable seam.
@@ -11,7 +16,7 @@
   as pure functions and wire OS access through seams, so tests cover both the
   happy path and every failure path with fixture injection — no root, any OS.
 
-## Working locally
+## Working locally {#working-locally}
 
 ```sh
 git clone https://github.com/go-facter/facter
@@ -30,7 +35,7 @@ qemu on the four non-native 64-bit arches. Because collectors branch on a runtim
 `GOOS` string (not build tags) and read through seams, a new fact group's logic
 is exercised on every runner from one set of fixture-driven tests.
 
-## License
+## License {#license}
 
 BSD-3-Clause. By contributing you agree your work is licensed under it.
 Copyright the go-facter/facter authors.

@@ -1,10 +1,15 @@
-# Usage & API
+---
+title: "Usage & API"
+weight: 40
+---
+
+# Usage & API {#usage-api}
 
 ```go
 import "github.com/go-facter/facter"
 ```
 
-## The Collection
+## The Collection {#the-collection}
 
 `facter.New()` returns a `*Collection` with every built-in fact registered
 against the real host. Facts resolve **lazily** and are **cached** for the life of
@@ -14,7 +19,7 @@ the collection.
 c := facter.New()
 ```
 
-### Querying — the surface the Ruby layer maps onto
+### Querying — the surface the Ruby layer maps onto {#querying-the-surface-the-ruby-layer-maps-onto}
 
 ```go
 func (c *Collection) Value(path string) (any, bool)         // Facter.value / Facter[]
@@ -35,7 +40,7 @@ _,    ok  = c.Value("os.nope")                        // nil, false
 `ToHash` resolves every fact into one nested map (facts absent on this host are
 omitted) — the whole inventory, ready to serialise.
 
-### Extending — custom facts
+### Extending — custom facts {#extending-custom-facts}
 
 ```go
 func (c *Collection) Add(name string, r Resolver)
@@ -56,7 +61,7 @@ c.AddFunc("uptime_minutes", func(cc *facter.Collection) (any, bool) {
 })
 ```
 
-### Encoding
+### Encoding {#encoding}
 
 ```go
 func facter.MarshalJSON(v any) (string, error) // Facter --json shape
@@ -65,7 +70,7 @@ func facter.MarshalYAML(v any) string          // Facter --yaml shape
 
 Both are exported so the Ruby binding can reproduce Facter's output verbatim.
 
-## Command line
+## Command line {#command-line}
 
 ```sh
 facter                # print all facts as JSON

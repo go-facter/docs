@@ -1,4 +1,9 @@
-# Facts & schema
+---
+title: "Facts & schema"
+weight: 30
+---
+
+# Facts & schema {#facts-schema}
 
 go-facter resolves the Facter **aggregate (structured)** facts and the **flat
 legacy aliases** that derive from them. Structured facts are nested maps queried
@@ -6,9 +11,9 @@ by dotted path (`os.release.full`); legacy aliases are top-level scalars
 (`operatingsystemrelease`). A fact that a platform cannot provide in pure Go is
 skipped gracefully rather than reported wrong.
 
-## Aggregate facts
+## Aggregate facts {#aggregate-facts}
 
-### `os`
+### `os` {#os}
 
 ```text
 os.name              e.g. "Ubuntu", "Darwin", "windows"
@@ -20,12 +25,12 @@ os.distro.*          Linux: id, codename, description, release.*   (from /etc/os
 os.macosx.*          Darwin: product, build, version.full/major/minor  (from sw_vers)
 ```
 
-### `kernel`
+### `kernel` {#kernel}
 
 `kernel` (`Linux` / `Darwin` / `windows`), `kernelrelease` (full release string),
 `kernelversion` (numeric prefix, e.g. `6.5.0`), `kernelmajversion` (`6.5`).
 
-### `networking`
+### `networking` {#networking}
 
 ```text
 networking.hostname / fqdn / domain
@@ -37,7 +42,7 @@ networking.interfaces.<name>.ip        per-interface ip / ip6 / mac / mtu
                              .bindings6[]
 ```
 
-### `processors`, `memory`
+### `processors`, `memory` {#processors-memory}
 
 ```text
 processors.count / physicalcount / models[] / isa
@@ -48,14 +53,14 @@ memory.swap.*                           (same shape; omitted when there is no sw
 Byte counts are integers; the human strings (`total`, `used`, …) use Facter's
 binary units (`15.51 GiB`), and `capacity` is a `"NN.NN%"` string.
 
-### Storage
+### Storage {#storage}
 
 `mountpoints.<path>` (device, filesystem, options, size/used/available bytes +
 human + capacity), `filesystems` (comma-separated on-disk fs types), and
 `disks.<name>` (size, model, vendor). These are Linux facts, parsed from
 `/proc/mounts`, `df`, `/proc/filesystems` and `/sys/block`.
 
-### Virtualization, uptime, identity
+### Virtualization, uptime, identity {#virtualization-uptime-identity}
 
 ```text
 virtual / is_virtual     hypervisor (DMI + cpu flag) and container (docker/podman/cgroup) detection
@@ -64,7 +69,7 @@ identity.user / group / uid / gid / privileged
 timezone, path, facterversion
 ```
 
-### Hardware inventory — `dmi`
+### Hardware inventory — `dmi` {#hardware-inventory-dmi}
 
 ```text
 dmi.manufacturer                                    system vendor (SMBIOS)
@@ -79,7 +84,7 @@ Darwin and `wmic` on Windows, and skipped where DMI is unavailable (many
 containers). The `bios_*`, `board*`, `chassis*`, `manufacturer`, `productname`,
 `serialnumber`, `uuid` legacy aliases derive from it.
 
-### `ssh`, `selinux`, `load_averages`
+### `ssh`, `selinux`, `load_averages` {#ssh-selinux-load_averages}
 
 ```text
 ssh.<algo>.type / key                               algo: rsa / dsa / ecdsa / ed25519
@@ -92,7 +97,7 @@ load_averages.1m / 5m / 15m                          run-queue averages as float
 The `ssh<algo>key` and `sshfp_<algo>` flat facts derive from the structured
 `ssh` fact, so each host key is read and fingerprinted at most once.
 
-### Cloud, Ruby & agent facts
+### Cloud, Ruby & agent facts {#cloud-ruby-agent-facts}
 
 ```text
 cloud.provider                                       aws / gce / azure, from DMI (no network)
@@ -107,7 +112,7 @@ env_windows_installdir                               Windows install directory f
 The `cloud` / `ec2_metadata` probes are bounded and non-blocking: a host that is
 not on a provider never stalls fact resolution.
 
-## Legacy aliases
+## Legacy aliases {#legacy-aliases}
 
 | Alias | Resolves to |
 |-------|-------------|
