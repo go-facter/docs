@@ -1,10 +1,15 @@
-# Custom & external facts
+---
+title: "Custom & external facts"
+weight: 50
+---
+
+# Custom & external facts {#custom-external-facts}
 
 go-facter extends its fact set two ways: **custom facts** registered in-process
 through the Go API, and **external facts** loaded from `facts.d` directories.
 Together they are the seam the Ruby custom-fact DSL binds onto.
 
-## Custom facts (in-process)
+## Custom facts (in-process) {#custom-facts-in-process}
 
 ```go
 c.AddValue("datacenter", "eu-west-1")
@@ -22,7 +27,7 @@ absent. This is the mapping target for Ruby's:
 Facter.add(:datacenter) { setcode { "eu-west-1" } }
 ```
 
-## External facts (`facts.d`)
+## External facts (`facts.d`) {#external-facts-factsd}
 
 ```go
 err := c.LoadExternalFacts("/etc/facter/facts.d", "/opt/puppetlabs/facts.d")

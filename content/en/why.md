@@ -1,4 +1,9 @@
-# Why a Go engine, not a Ruby port
+---
+title: "Why a Go engine"
+weight: 20
+---
+
+# Why a Go engine, not a Ruby port {#why-a-go-engine-not-a-ruby-port}
 
 Puppet's Facter is Ruby, leans on C extensions, and shells out to many system
 tools. That is fine on a full Ruby install, but the go-\* ecosystem runs Ruby
@@ -6,7 +11,7 @@ through **`rbgo`** — a pure-Go embedded Ruby (`go-embedded-ruby`) that ships a
 **static, cgo-free binary**. A fact engine that pulls in C extensions or a Ruby
 runtime would defeat that.
 
-## The split
+## The split {#the-split}
 
 go-facter draws a clean line:
 
@@ -21,7 +26,7 @@ go-facter draws a clean line:
 
 > **This library resolves facts; the Ruby layer exposes them as Facter.**
 
-## Fidelity over convenience
+## Fidelity over convenience {#fidelity-over-convenience}
 
 Fact **names and structure follow Facter's schema**, not a Go-idiomatic shape and
 not `gopsutil`'s vocabulary. `os.family` is `"Debian"`, `os.release.full` is the
@@ -30,7 +35,7 @@ publishes, and the flat legacy aliases (`operatingsystem`, `osfamily`,
 `ipaddress`, …) exist alongside the aggregate facts. That fidelity is what lets a
 Puppet manifest resolve the same facts it always has.
 
-## Testability by construction
+## Testability by construction {#testability-by-construction}
 
 Every interaction with the operating system — file reads, command execution,
 interface enumeration, the current user — flows through an **injectable seam**.

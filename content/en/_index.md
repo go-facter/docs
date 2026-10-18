@@ -1,4 +1,9 @@
-# go-facter
+---
+title: "Home"
+weight: 10
+---
+
+# go-facter {#go-facter}
 
 **A pure-Go (no cgo) reimplementation of Puppet's
 [Facter](https://www.puppet.com/docs/puppet/latest/facter.html) system-inventory
@@ -23,7 +28,7 @@ c.AddValue("role", "web")                  // -> Facter.add
 c.LoadExternalFacts("/etc/facter/facts.d") // external facts
 ```
 
-## Why it exists
+## Why it exists {#why-it-exists}
 
 Puppet's Facter is Ruby with C extensions and shells out heavily. To run Puppet
 manifests and Ruby fact code under a pure-Go embedded Ruby (`rbgo`) with **cgo
@@ -31,13 +36,13 @@ disabled and a static binary**, the fact engine has to be pure Go too. go-facter
 provides that engine, matching Facter's fact **names and schema** so it is a
 drop-in.
 
-- **[Why a Go engine](why.md)** — the split between engine and Ruby surface.
-- **[Facts & schema](facts.md)** — every fact group and its structure.
-- **[Usage & API](api.md)** — the Go API the Ruby layer maps onto, and the CLI.
-- **[Custom & external facts](external.md)** — extending the fact set.
-- **[Roadmap](roadmap.md)** — what is done and what is next.
+- **[Why a Go engine]({{< relref "why.md" >}})** — the split between engine and Ruby surface.
+- **[Facts & schema]({{< relref "facts.md" >}})** — every fact group and its structure.
+- **[Usage & API]({{< relref "api.md" >}})** — the Go API the Ruby layer maps onto, and the CLI.
+- **[Custom & external facts]({{< relref "external.md" >}})** — extending the fact set.
+- **[Roadmap]({{< relref "roadmap.md" >}})** — what is done and what is next.
 
-## Guarantees
+## Guarantees {#guarantees}
 
 - **Pure Go, zero cgo.** Standard library only; cross-compiles everywhere.
 - **Faithful to Facter's schema.** Aggregate structured facts plus flat legacy
